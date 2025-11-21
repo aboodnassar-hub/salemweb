@@ -71,7 +71,7 @@ const App = () => {
         { number: '25+', label: 'Years Experience' },
         { number: '500+', label: 'Corporate Clients' },
         { number: '100%', label: 'UAE Compliance' },
-        { number: '1B+', label: 'Assets Audited' },
+        { number: '10K+', label: 'Assets Audited' },
       ],
       services: {
         header: "Our Expertise",
