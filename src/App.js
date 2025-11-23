@@ -18,7 +18,6 @@ import {
   ChevronLeft,
   ArrowLeft,
   Linkedin,
-  Download
 } from 'lucide-react';
 
 // --- Data: Team Members ---
@@ -141,6 +140,35 @@ const App = () => {
     setIsMenuOpen(false);
   };
 
+  // --- Handle Form Submission ---
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // Collect form data
+    const formData = new FormData(e.target);
+    const data = {
+      firstName: formData.get('firstName'),
+      lastName: formData.get('lastName'),
+      company: formData.get('company'),
+      service: formData.get('service'),
+      message: formData.get('message')
+    };
+
+    // Construct Email
+    const subject = `New Request from Website: ${data.company || 'Inquiry'}`;
+    const body = `
+Name: ${data.firstName} ${data.lastName}
+Company: ${data.company}
+Service Required: ${data.service}
+
+Message:
+${data.message}
+    `;
+
+    // Open Email Client
+    window.location.href = `mailto:salemoffice123@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
   // Content Dictionary
   const content = {
     en: {
@@ -222,7 +250,6 @@ const App = () => {
         role: "Role",
         expertise: "Core Expertise",
         contact: "Contact",
-        download: "Download V-Card"
       },
       contact: {
         title: "Let's Discuss Your Financial Future",
@@ -337,7 +364,6 @@ const App = () => {
         role: "المنصب",
         expertise: "الخبرات الأساسية",
         contact: "تواصل",
-        download: "تحميل بطاقة العمل"
       },
       contact: {
         title: "دعنا نناقش مستقبلك المالي",
@@ -623,37 +649,37 @@ const App = () => {
             </div>
 
             <div className="bg-white rounded-2xl p-8 shadow-2xl">
-              <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 <h3 className="text-2xl font-bold text-slate-900 mb-2">{t.contact.labels.formTitle}</h3>
                 
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">{t.contact.labels.firstName}</label>
-                    <input type="text" className="w-full border border-slate-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none transition-all" placeholder={t.contact.placeholders.firstName} />
+                    <input name="firstName" type="text" className="w-full border border-slate-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none transition-all" placeholder={t.contact.placeholders.firstName} required />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">{t.contact.labels.lastName}</label>
-                    <input type="text" className="w-full border border-slate-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none transition-all" placeholder={t.contact.placeholders.lastName} />
+                    <input name="lastName" type="text" className="w-full border border-slate-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none transition-all" placeholder={t.contact.placeholders.lastName} required />
                   </div>
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">{t.contact.labels.company}</label>
-                  <input type="text" className="w-full border border-slate-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none transition-all" placeholder={t.contact.placeholders.company} />
+                  <input name="company" type="text" className="w-full border border-slate-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none transition-all" placeholder={t.contact.placeholders.company} />
                 </div>
 
                 <div>
                    <label className="block text-sm font-medium text-slate-700 mb-1">{t.contact.labels.service}</label>
-                   <select className="w-full border border-slate-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none transition-all bg-white">
+                   <select name="service" className="w-full border border-slate-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none transition-all bg-white">
                      {t.contact.options.map((opt, i) => (
-                       <option key={i}>{opt}</option>
+                       <option key={i} value={opt}>{opt}</option>
                      ))}
                    </select>
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">{t.contact.labels.message}</label>
-                  <textarea className="w-full border border-slate-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none transition-all h-32" placeholder={t.contact.placeholders.message}></textarea>
+                  <textarea name="message" className="w-full border border-slate-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none transition-all h-32" placeholder={t.contact.placeholders.message} required></textarea>
                 </div>
 
                 <button className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 rounded-lg transition-all shadow-lg hover:shadow-amber-500/20">
@@ -738,17 +764,11 @@ const App = () => {
                       <div className="flex flex-wrap gap-2">
                          {member.expertise[lang].map((skill, i) => (
                             <span key={i} className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium">
-                               {skill || (lang === 'en' ? "General Management" : "إدارة عامة")}
+                               {skill || (lang === 'en' ? "NON" : "NON")}
                             </span>
                          ))}
                       </div>
                    </div>
-
-                   <button className="inline-flex items-center gap-2 bg-blue-900 hover:bg-blue-800 text-white px-6 py-3 rounded-lg font-medium transition-all shadow-lg hover:shadow-blue-900/20">
-                      <Download size={18} />
-                      {t.profile.download}
-                   </button>
-
                 </div>
              </div>
           </div>
