@@ -18,6 +18,7 @@ import {
   ChevronLeft,
   ArrowLeft,
   Linkedin,
+  Download
 } from 'lucide-react';
 
 // --- Data: Team Members ---
@@ -95,8 +96,7 @@ const App = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // FIXED: Only scroll to top when OPENING a profile. 
-  // We do not scroll to top when closing (selectedMember becomes null)
+  // Only scroll to top when OPENING a profile
   useEffect(() => {
     if (selectedMember) {
       window.scrollTo(0, 0);
@@ -108,7 +108,7 @@ const App = () => {
     setIsMenuOpen(false);
   };
 
-  // FIXED: New function to handle returning to the team grid
+  // Handle returning to the team grid
   const handleBackToTeam = () => {
     setSelectedMember(null);
     // Wait for the main view to re-render, then scroll to the team grid
@@ -117,7 +117,6 @@ const App = () => {
       if (teamSection) {
         teamSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
       } else {
-        // Fallback to about section if grid not found
         const aboutSection = document.getElementById('about');
         if (aboutSection) aboutSection.scrollIntoView({ behavior: 'smooth' });
       }
@@ -127,7 +126,6 @@ const App = () => {
   const scrollToSection = (id) => {
     if (selectedMember) {
       setSelectedMember(null);
-      // Give React a moment to unmount profile before scrolling
       setTimeout(() => {
         const element = document.getElementById(id);
         if (element) {
@@ -224,6 +222,7 @@ const App = () => {
         role: "Role",
         expertise: "Core Expertise",
         contact: "Contact",
+        download: "Download V-Card"
       },
       contact: {
         title: "Let's Discuss Your Financial Future",
@@ -338,6 +337,7 @@ const App = () => {
         role: "المنصب",
         expertise: "الخبرات الأساسية",
         contact: "تواصل",
+        download: "تحميل بطاقة العمل"
       },
       contact: {
         title: "دعنا نناقش مستقبلك المالي",
@@ -476,9 +476,10 @@ const App = () => {
       <section id="about" className="py-24 bg-white">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row items-start gap-16">
-            <div className="md:w-1/2 sticky top-24">
+            {/* FIXED: Removed 'sticky' on mobile (only md:sticky) to prevent layout overlap */}
+            <div className="w-full md:w-1/2 relative md:sticky md:top-24">
               <div className="relative">
-                {/* Chairman Image with user modifications preserved */}
+                {/* Chairman Image */}
                 <div className="aspect-[4/5] rounded-lg overflow-hidden relative group shadow-lg">
                   <img
                     src="/salempic.png"
@@ -490,7 +491,8 @@ const App = () => {
                     <span className="text-white font-semibold text-lg">SALEM</span>
                   </div>
 
-                  <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-slate-900/90 to-transparent p-8">
+                  {/* FIXED: Reduced padding on mobile (p-4) to prevent text overflow */}
+                  <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-slate-900/90 to-transparent p-4 md:p-8">
                      <h4 className="text-white text-xl font-bold">Mr. Salem Ballama Al Tamimi</h4>
                      <p className="text-amber-400 text-sm">{t.about.role}</p>
                   </div>
@@ -502,7 +504,6 @@ const App = () => {
               </div>
 
               {/* Team Grid */}
-              {/* ADDED ID HERE FOR SCROLL TARGETING */}
               <div className="mt-16" id="team-grid">
                 <div className="flex justify-between items-end mb-6">
                    <h3 className="text-xl font-bold text-slate-900">
@@ -513,7 +514,7 @@ const App = () => {
                    </span>
                 </div>
                 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 gap-4">
                   {teamMembers.map((member) => (
                     <div 
                       key={member.id} 
@@ -542,7 +543,7 @@ const App = () => {
               </div>
 
             </div>
-            <div className="md:w-1/2">
+            <div className="w-full md:w-1/2">
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
                 {t.about.title}
               </h2>
@@ -672,7 +673,6 @@ const App = () => {
        <div className="container mx-auto px-6">
           
           {/* Back Button */}
-          {/* FIXED: Using handleBackToTeam instead of inline function */}
           <button 
              onClick={handleBackToTeam}
              className="flex items-center gap-2 text-slate-500 hover:text-blue-900 mb-8 transition-colors group font-medium"
@@ -684,7 +684,7 @@ const App = () => {
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100">
              <div className="grid md:grid-cols-12 gap-0">
                 {/* Image Column */}
-                <div className="md:col-span-5 relative h-[400px] md:h-auto">
+                <div className="md:col-span-5 relative h-72 md:h-auto">
                    <img 
                       src={member.image} 
                       alt={member.name[lang]}
@@ -744,6 +744,10 @@ const App = () => {
                       </div>
                    </div>
 
+                   <button className="inline-flex items-center gap-2 bg-blue-900 hover:bg-blue-800 text-white px-6 py-3 rounded-lg font-medium transition-all shadow-lg hover:shadow-blue-900/20">
+                      <Download size={18} />
+                      {t.profile.download}
+                   </button>
 
                 </div>
              </div>
