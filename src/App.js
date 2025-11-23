@@ -177,7 +177,7 @@ const App = () => {
         { number: '+25', label: 'سنة خبرة' },
         { number: '+500', label: 'عميل شركة' },
         { number: '%100', label: 'امتثال للقوانين' },
-        { number: '+1 مليار', label: 'أصول مدققة' },
+        { number: '+10 آلاف', label: 'أصول مدققة' },
       ],
       services: {
         header: "خبراتنا",
