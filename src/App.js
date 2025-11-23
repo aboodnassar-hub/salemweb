@@ -255,7 +255,7 @@ const App = () => {
         ]
       },
       footer: {
-        rights: "سالم بلعمة لتدقيق الحسابات. جميع الحقوق محفوظة.",
+        rights: "سالم بلعمه لتدقيق الحسابات. جميع الحقوق محفوظة.",
         tagline: "صمم للتميز في الإمارات."
       }
     }
@@ -286,7 +286,7 @@ const App = () => {
             </div>
             <div className="flex flex-col">
               <span className={`font-bold text-xl tracking-tight leading-none ${scrolled ? 'text-slate-900' : 'text-white'}`}>
-                 {lang === 'en' ? "SALEM BALLAMA" : "سالم بلعمة"}
+                 {lang === 'en' ? "SALEM BALLAMA" : "سالم بلعمه"}
               </span>
               <span className={`text-xs tracking-widest uppercase ${scrolled ? 'text-slate-500' : 'text-slate-300'}`}>
                 {lang === 'en' ? "Auditing & Advisory" : "للتدقيق والاستشارات"}
@@ -601,7 +601,7 @@ const App = () => {
             <div className="flex items-center gap-2">
                <Scale size={24} className="text-blue-500" />
                <span className="text-white font-bold text-lg">
-                 {lang === 'en' ? "SALEM BALLAMA" : "سالم بلعمة"}
+                 {lang === 'en' ? "SALEM BALLAMA" : "سالم بلعمه"}
                </span>
             </div>
             <div className="text-sm text-center md:text-right">
